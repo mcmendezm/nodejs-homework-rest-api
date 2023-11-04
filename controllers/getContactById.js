@@ -1,15 +1,10 @@
-const fs = require('fs').promises;
-const path = require('path');
-const contactsPath = path.join(__dirname,'../models', 'contacts.json');
+const Contact = require('../models/contacts'); 
 
 const getContactById = async (req, res) => {
   const { contactId } = req.params;
 
   try {
-    const data = await fs.readFile(contactsPath, 'utf-8');
-    const contacts = JSON.parse(data);
-    
-    const contact = contacts.find((c) => c.id === contactId);
+    const contact = await Contact.findById(contactId);
 
     if (contact) {
       res.status(200).json(contact);
@@ -21,4 +16,5 @@ const getContactById = async (req, res) => {
     res.status(500).json({ error });
   }
 };
-module.exports = getContactById
+
+module.exports = getContactById;

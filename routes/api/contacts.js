@@ -17,4 +17,7 @@ router.delete('/:contactId', controllers.removeContact);
 // Actualizar un contacto por su ID
 router.put('/:contactId', controllers.updateContact);
 
+// Ruta para actualizar el estado favorito de un contacto
+router.patch('/:contactId/favorite', controllers.updateFavoriteStatus);
+
 module.exports = router;

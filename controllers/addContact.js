@@ -1,7 +1,4 @@
-const fs = require('fs').promises;
-const path = require('path');
-const contactsPath = path.join(__dirname,'../models', 'contacts.json');
-const crypto = require('crypto')
+const Contact = require('../models/contacts'); 
 const { createContactSchema } = require('../validation/validation');
 
 const addContact = async (req, res) => {
@@ -10,25 +7,21 @@ const addContact = async (req, res) => {
   if (error) {
     return res.status(400).json({ error: { "message": "missing required name field" } });
   }
+
   try {
-    
-    const data = await fs.readFile(contactsPath, 'utf-8');
-    const contacts = JSON.parse(data);
-    const newContact = {
-      id: crypto.randomUUID(),
-      ...req.body,
-    };
+    const newContact = new Contact({
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+    });
 
-    contacts.push(newContact);
+    const savedContact = await newContact.save();
 
-    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-    res.status(201).json({ message: 'Contact added successfully' });
+    res.status(201).json({ data: savedContact });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error });
   }
 };
 
-
-
-module.exports = addContact
+module.exports = addContact;

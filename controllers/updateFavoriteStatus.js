@@ -1,4 +1,3 @@
-// controllers/contacts.js
 const Contact = require('../models/contacts');
 
 const updateFavoriteStatus = async (req, res) => {

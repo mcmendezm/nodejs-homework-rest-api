@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/users');
-const { loginSchema } = require('../validation/validation');
+const User = require('../../models/users');
+const { loginSchema } = require('../../validation/validation');
+
 
 const login = async (req, res) => {
   try {
@@ -21,26 +22,25 @@ const login = async (req, res) => {
 
     // Comparar la contraseña
     const passwordMatch = await bcrypt.compare(req.body.password, user.password);
-
+console.log(passwordMatch)
     if (passwordMatch) {
+      console.log( "ENTRANDO")
       // Generar un token JWT y guardarlo en el usuario
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       user.token = token;
       await user.save();
-
-      res.status(200).json({
-        token,
-        user: {
-          email: user.email,
-          subscription: user.subscription,
-        },
-      });
+      console.log(token);
+      res.status(200).json({ token, user: { email: user.email, subscription: user.subscription } });
+    
     } else {
       return res.status(401).json({ message: 'Email or password is wrong' });
     }
   } catch (error) {
+    console.log (error)
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 module.exports = login;
+
+

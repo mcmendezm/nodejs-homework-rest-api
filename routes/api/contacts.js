@@ -1,5 +1,5 @@
 const express = require('express');
-const controllers= require('../../controllers/index')
+const controllers= require('../../controllers/contacts/index')
 const router = express.Router();
 
 // Obtener la lista de contactos

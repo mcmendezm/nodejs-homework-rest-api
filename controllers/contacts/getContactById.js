@@ -1,13 +1,13 @@
-const Contact = require('../models/contacts'); 
+const Contact = require('../../models/contacts'); 
 
-const removeContact = async (req, res) => {
+const getContactById = async (req, res) => {
   const { contactId } = req.params;
 
   try {
-    const contact = await Contact.findOneAndDelete({ _id: contactId });
+    const contact = await Contact.findById(contactId);
 
     if (contact) {
-      res.status(204).send();
+      res.status(200).json(contact);
     } else {
       res.status(404).json({ message: 'Contact not found' });
     }
@@ -17,4 +17,4 @@ const removeContact = async (req, res) => {
   }
 };
 
-module.exports = removeContact;
+module.exports = getContactById;

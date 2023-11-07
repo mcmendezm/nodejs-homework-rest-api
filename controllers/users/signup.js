@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/users');
-const { signupSchema } = require('../validation/validation');
+const User = require('../../models/users');
+const { signupSchema } = require('../../validation/validation');
 
 const signup = async (req, res) => {
   try {
-    // Validar los datos de registro
+    // Validar los datos del registro
     const { error } = signupSchema.validate(req.body);
 
     if (error) {
@@ -22,24 +22,23 @@ const signup = async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
-    // Crear un nuevo usuario
+    // Crear un nuevo usuario con la contraseña cifrada
     const newUser = new User({
       email: req.body.email,
       password: hashedPassword,
+      
     });
+    console.log(hashedPassword);
 
     // Guardar el nuevo usuario en la base de datos
     await newUser.save();
 
-    res.status(201).json({
-      user: {
-        email: newUser.email,
-        subscription: newUser.subscription,
-      },
-    });
+    res.status(201).json({ user: { email: newUser.email, subscription: newUser.subscription } });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 module.exports = signup;
+
+

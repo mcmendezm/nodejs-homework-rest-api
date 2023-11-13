@@ -22,14 +22,11 @@ const login = async (req, res) => {
 
     // Comparar la contraseña
     const passwordMatch = await bcrypt.compare(req.body.password, user.password);
-console.log(passwordMatch)
     if (passwordMatch) {
-      console.log( "ENTRANDO")
       // Generar un token JWT y guardarlo en el usuario
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       user.token = token;
       await user.save();
-      console.log(token);
       res.status(200).json({ token, user: { email: user.email, subscription: user.subscription } });
     
     } else {

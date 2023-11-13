@@ -1,9 +1,10 @@
 const express = require('express');
 const controllers= require('../../controllers/contacts/index')
 const router = express.Router();
+const authMiddleware = require('../../middleware/auth');
 
 // Obtener la lista de contactos
-router.get('/',controllers.listContacts);
+router.get('/', authMiddleware , controllers.listContacts);
 
 // Obtener un contacto por su ID
 router.get('/:contactId', controllers.getContactById);

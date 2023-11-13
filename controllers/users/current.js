@@ -4,7 +4,7 @@ const { userSchema } = require('../../models/users');
 const current = async (req, res, next) => {
   try {
     // El middleware de autenticación ya ha verificado el token y ha establecido req.user
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     // Busca el usuario por ID
     const user = await userSchema.findById(userId);

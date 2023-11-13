@@ -14,14 +14,17 @@ const auth = async (req, res, next) => {
             throw new Unauthorized("Not authorized");
         }
 
-        const { id } =  jwt.verify(token, JWT_SECRET);// id me retorna undefined
-        console.log (id)
+        const { id } = jwt.verify(token, JWT_SECRET);// id me retorna undefined
+        console.log({ id })
         const user = await User.findById(id);
-        console.log ({user})
+        console.log({user})
+        
         if (!user || !user.token) {
             throw new Unauthorized("Not authorized");
         }
-        req.user = { userId: user._id }
+        req.user = user
+        console.log({user})
+        next()
     } catch (error) {
         console.log({error})
         if (error.message === "invalid signature") {

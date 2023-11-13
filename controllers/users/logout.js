@@ -3,16 +3,16 @@ const User = require('../../models/users');
 
 const logout = async (req, res, next) => {
   try {
-    console.log("HOLA")
+    console.log("entrando logout")
+
     // Obtener el ID del usuario desde el token
-    const userId = req.user.userId;
-    console.log({userId})
+    
+    const userId = req.user._id;
 
     // Buscar el usuario por ID en la base de datos
     const user = await User.findById(userId);
     // Si el usuario no existe, devolver un error Unauthorized
     if (!user || !user.token) {
-      console.log("LOGOUT 1")
       throw new Unauthorized('Not authorized');
     }
 

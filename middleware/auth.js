@@ -14,10 +14,8 @@ const auth = async (req, res, next) => {
             throw new Unauthorized("Not authorized");
         }
 
-        const { id } = jwt.verify(token, JWT_SECRET);// id me retorna undefined
-        console.log({ id })
-        const user = await User.findById(id);
-        console.log({user})
+const { userId } = jwt.verify(token, JWT_SECRET);
+const user = await User.findById(userId);
         
         if (!user || !user.token) {
             throw new Unauthorized("Not authorized");

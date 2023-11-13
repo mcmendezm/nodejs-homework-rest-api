@@ -3,10 +3,7 @@ const User = require('../../models/users');
 
 const logout = async (req, res, next) => {
   try {
-    console.log("entrando logout")
-
     // Obtener el ID del usuario desde el token
-    
     const userId = req.user._id;
 
     // Buscar el usuario por ID en la base de datos

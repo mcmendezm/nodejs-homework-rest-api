@@ -1,5 +1,4 @@
-// controllers/contacts.js
-const Contact = require('../models/contacts');
+const Contact = require('../../models/contacts');
 
 const updateFavoriteStatus = async (req, res) => {
   const { contactId } = req.params;

@@ -1,5 +1,5 @@
-const Contact = require('../models/contacts'); 
-const { createContactSchema } = require('../validation/validation');
+const Contact = require('../../models/contacts'); 
+const { createContactSchema } = require('../../validation/validation');
 
 const addContact = async (req, res) => {
   const { error } = createContactSchema.validate(req.body);

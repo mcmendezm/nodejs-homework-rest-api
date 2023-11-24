@@ -1,5 +1,5 @@
-const { updateContactSchema } = require('../validation/validation');
-const Contact = require('../models/contacts'); 
+const { updateContactSchema } = require('../../validation/validation');
+const Contact = require('../../models/contacts'); 
 
 const updateContact = async (req, res) => {
   const { contactId } = req.params;

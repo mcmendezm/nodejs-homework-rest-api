@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
+  avatarURL: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('users', userSchema);

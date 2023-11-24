@@ -1,6 +1,7 @@
 const express = require('express');
 const controllers = require('../../controllers/users/index')
 const authMiddleware = require('../../middleware/auth');
+ const uploadMiddleware = require('../../middleware/upload')
 const router = express.Router();
 
 
@@ -16,5 +17,8 @@ router.get('/logout', authMiddleware, controllers.logout);
 
 // Ruta para obtener el usuario actual
 router.get('/current', authMiddleware, controllers.current);
+
+// Ruta para agregar avatars
+router.patch('/avatars', authMiddleware, uploadMiddleware.single('avatar'), controllers.updateAvatar);
 
 module.exports = router;
